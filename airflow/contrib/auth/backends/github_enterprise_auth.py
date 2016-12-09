@@ -87,8 +87,6 @@ class GHEAuthBackend(object):
 
         return '/'.join(['https:/',
                          self.ghe_host,
-                         'api',
-                         self.api_rev,
                          leaf.strip('/')])
 
     def init_app(self, flask_app):
