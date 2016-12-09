@@ -94,6 +94,10 @@ class GHEAuthBackend(object):
 
         self.login_manager.init_app(self.flask_app)
 
+        if self.ghe_host == 'api.github.com':
+            host = 'github.com'
+        else:
+            host = self.ghe_host
         self.ghe_oauth = OAuth(self.flask_app).remote_app(
             'ghe',
             consumer_key=get_config_param('client_id'),
@@ -104,10 +108,10 @@ class GHEAuthBackend(object):
             request_token_url=None,
             access_token_method='POST',
             access_token_url=''.join(['https://',
-                                      self.ghe_host,
+                                      host,
                                       '/login/oauth/access_token']),
             authorize_url=''.join(['https://',
-                                   self.ghe_host,
+                                   host,
                                    '/login/oauth/authorize']))
 
         self.login_manager.user_loader(self.load_user)
